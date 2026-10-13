@@ -1,1 +1,15 @@
 .DS_Store
+.env
+data/
+__pycache__/
+*.pyc
+frontend/node_modules/
+frontend/dist/
+web/dist/
+picture/**/*.png
+picture/**/*.jpg
+picture/**/*.jpeg
+picture/**/*.webp
+video/**/*.mp4
+video/**/*.webm
+video/**/*.mov
