@@ -1,0 +1,324 @@
+{
+  "114": {
+    "inputs": {
+      "image": "e6defe6c6d8645b6b1ffcad7cdeb08c4.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "115": {
+    "inputs": {
+      "aspect_ratio": "9:16 (Portrait Widescreen)",
+      "megapixels": 0.5,
+      "multiple": 32
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "分辨率选择器"
+    }
+  },
+  "119": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "megapixels": 1,
+      "resolution_steps": 32
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "缩放图像（像素）"
+    }
+  },
+  "120": {
+    "inputs": {
+      "image": [
+        "119",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "获取图像尺寸"
+    }
+  },
+  "126": {
+    "inputs": {
+      "video": [
+        "105_91",
+        0
+      ]
+    },
+    "class_type": "GetVideoComponents",
+    "_meta": {
+      "title": "获取视频元素"
+    }
+  },
+  "128": {
+    "inputs": {
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video": [
+        "105_91",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "保存视频"
+    }
+  },
+  "105_11": {
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "105_24": {
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "105_13": {
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "加载CLIP"
+    }
+  },
+  "105_15": {
+    "inputs": {
+      "noise_seed": 803303284478832
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "随机噪波"
+    }
+  },
+  "105_111": {
+    "inputs": {
+      "value": 3
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Float (duration)"
+    }
+  },
+  "105_6": {
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNet加载器"
+    }
+  },
+  "105_17": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "K采样器选择"
+    }
+  },
+  "105_107": {
+    "inputs": {
+      "expression": "round(a * 24) + (5 - (round(a * 24) % 17)) % 17\n",
+      "values.a": [
+        "105_111",
+        0
+      ]
+    },
+    "class_type": "ComfyMathExpression",
+    "_meta": {
+      "title": "数学表达式"
+    }
+  },
+  "105_122": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "105_6",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoRA加载器（仅模型）"
+    }
+  },
+  "105_104": {
+    "inputs": {
+      "prompt": "3-second vertical anime motion video, based exactly on the input portrait photo. Highest priority: preserve the same young man’s facial features, short black hair, forehead shape, eye shape, nose, mouth, pale skin, black suit, white shirt, yellow-gray striped tie, arms-crossed posture, and professional portrait composition. All movement must come from the same person.\n\nStyle: Japanese cinematic cel anime adaptation, clean outline drawing, soft shaded shadows, realistic hairstyle and suit fabric, muted professional colors, no 3D rendering, no photorealistic face distortion, no other people, no background characters, no text or subtitles.\n\n0.0–1.0 second: Start exactly like the input image. The character remains in the arms-crossed portrait pose, breathing gently. On a soft beat, the eyes slowly blink once, and a few strands of short hair move very slightly.\n\n1.0–2.0 second: The character turns his head very slowly and slightly toward the camera, while the body and crossed arms stay stable. The anime shading shifts subtly across the suit shoulder and tie, keeping the same face and identity.\n\n2.0–3.0 second: The character returns to the original front-facing portrait pose, holds the arms-crossed position, and looks straight at the camera. A very subtle breath movement rises and falls in the chest, then the image freezes cleanly for the last 0.4 seconds.\n\nAudio: soft low ambient electronic tone, gentle whoosh, subtle fabric rustling, no lyrics, no dialogue, no added on-screen text. Preserve the original image marks without enlarging or animating them.",
+      "width": [
+        "115",
+        0
+      ],
+      "height": [
+        "115",
+        1
+      ],
+      "length": [
+        "105_107",
+        1
+      ],
+      "clip": [
+        "105_13",
+        0
+      ],
+      "vae": [
+        "105_11",
+        0
+      ],
+      "first_frame": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3ImageToVideo",
+    "_meta": {
+      "title": "MiniMax H3 图像转视频"
+    }
+  },
+  "105_123": {
+    "inputs": {
+      "shift_video": 3,
+      "shift_audio": 3,
+      "model": [
+        "105_122",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3SigmaShift",
+    "_meta": {
+      "title": "MiniMax H3 Sigma Shift"
+    }
+  },
+  "105_16": {
+    "inputs": {
+      "model": [
+        "105_123",
+        0
+      ],
+      "conditioning": [
+        "105_104",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "基本引导器"
+    }
+  },
+  "105_9": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "105_123",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "基本调度器"
+    }
+  },
+  "105_14": {
+    "inputs": {
+      "noise": [
+        "105_15",
+        0
+      ],
+      "guider": [
+        "105_16",
+        0
+      ],
+      "sampler": [
+        "105_17",
+        0
+      ],
+      "sigmas": [
+        "105_9",
+        0
+      ],
+      "latent_image": [
+        "105_104",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "自定义采样器（高级）"
+    }
+  },
+  "105_10": {
+    "inputs": {
+      "samples": [
+        "105_14",
+        0
+      ],
+      "vae": [
+        "105_11",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "105_23": {
+    "inputs": {
+      "samples": [
+        "105_14",
+        0
+      ],
+      "vae": [
+        "105_24",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAE解码（音频）"
+    }
+  },
+  "105_91": {
+    "inputs": {
+      "fps": 24,
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "codec": "none",
+      "images": [
+        "105_10",
+        0
+      ],
+      "audio": [
+        "105_23",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "创建视频"
+    }
+  }
+}
