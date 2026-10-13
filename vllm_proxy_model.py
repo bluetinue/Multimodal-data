@@ -52,9 +52,8 @@ def _get_dashscope_api_key() -> str:
     return ""
 
 
-# local 环境直连公网 GPU 机器，其他环境（sit/uat/dev/prod）走内网 192.168.22.9
-# 通过 .env.* 中的 VLLM_BASE_HOST 控制，local 不设则使用默认公网地址
-_VLLM_BASE_HOST: str = os.getenv("VLLM_BASE_HOST", "183.252.196.135")
+# 通过环境变量 VLLM_BASE_HOST 指定模型服务地址
+_VLLM_BASE_HOST: str = os.getenv("VLLM_BASE_HOST", "127.0.0.1")
 _VLLM_API_KEY: str = os.getenv("VLLM_API_KEY", "")
 
 

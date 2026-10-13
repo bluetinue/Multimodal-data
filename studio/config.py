@@ -38,7 +38,10 @@ def access_token() -> str:
 
 def comfyui_url() -> str:
     """读取 ComfyUI 地址。"""
-    return os.getenv("COMFYUI_URL", "http://183.252.196.135:8723").rstrip("/")
+    url = os.getenv("COMFYUI_URL", "").strip().rstrip("/")
+    if not url:
+        raise RuntimeError("请设置环境变量 COMFYUI_URL")
+    return url
 
 
 def studio_host() -> str:
